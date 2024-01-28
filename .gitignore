@@ -1,0 +1,7 @@
+### IntelliJ IDEA / Goland ###
+*.iws
+*.iml
+*.ipr
+.idea
+!.idea/runConfigurations/*
+!.idea/inspectionProfiles/*
