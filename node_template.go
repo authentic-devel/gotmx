@@ -29,14 +29,9 @@ func (n *nodeTemplate) NewRenderable(data any) (Renderable, error) {
 }
 
 func processNode(tr TemplateRegistry, sourceFile string, node *html.Node) error {
-	if node.Type == html.DocumentNode {
-		err := processAttributes(tr, sourceFile, node)
-		if err != nil {
-			return err
-		}
-	} else if node.Type == html.ElementNode {
-		err := processAttributes(tr, sourceFile, node)
-		if err != nil {
+	switch node.Type {
+	case html.DocumentNode, html.ElementNode:
+		if err := processAttributes(tr, sourceFile, node); err != nil {
 			return err
 		}
 	}

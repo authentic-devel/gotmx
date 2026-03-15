@@ -13,12 +13,12 @@ func compareStrings(result string, expected string, t *testing.T) {
 		prefix := result[0:differIndex]
 
 		// We want to make whitespace visible in the log for easier comparing
-		result = strings.Replace(result, " ", ".", -1)
-		result = strings.Replace(result, "\t", ".", -1)
-		result = strings.Replace(result, "\n", "\\n\n", -1)
-		expected = strings.Replace(expected, " ", ".", -1)
-		expected = strings.Replace(expected, "\t", ".", -1)
-		expected = strings.Replace(expected, "\n", "\\n\n", -1)
+		result = strings.ReplaceAll(result, " ", ".")
+		result = strings.ReplaceAll(result, "\t", ".")
+		result = strings.ReplaceAll(result, "\n", "\\n\n")
+		expected = strings.ReplaceAll(expected, " ", ".")
+		expected = strings.ReplaceAll(expected, "\t", ".")
+		expected = strings.ReplaceAll(expected, "\n", "\\n\n")
 
 		t.Errorf("\nExpected result does not match after (index %d):\n"+
 			"--------------------------------------------------\n"+

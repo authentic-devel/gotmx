@@ -87,7 +87,7 @@ func (tl *templateLoaderHTMLDev) Start() error {
 		return err
 	}
 	if !fileInfo.IsDir() {
-		return errors.New("Given path  must be a directory")
+		return errors.New("given path must be a directory")
 	}
 	return tl.Reload()
 }

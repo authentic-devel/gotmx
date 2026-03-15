@@ -292,7 +292,7 @@ func TestEngineWithDevMode(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	engine.Close()
+	_ = engine.Close()
 
 	if !engine.config.devMode {
 		t.Error("DevMode was not enabled")

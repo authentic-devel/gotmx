@@ -1,9 +1,12 @@
+version: "2"
+
 linters:
-  # Start from the default set, explicitly listed so a golangci-lint
-  # upgrade never silently changes which linters are active.
+  # Explicitly listed so a golangci-lint upgrade never silently
+  # changes which linters are active.
+  # Note: gosimple is now merged into staticcheck in v2.
+  default: none
   enable:
     - errcheck
-    - gosimple
     - govet
     - ineffassign
     - staticcheck
