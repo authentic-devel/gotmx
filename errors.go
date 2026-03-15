@@ -21,13 +21,13 @@ func (e *TemplateNotFoundError) Error() string {
 	var msg strings.Builder
 
 	if e.Namespace != "" {
-		msg.WriteString(fmt.Sprintf("template %q not found in namespace %q", e.Name, e.Namespace))
+		fmt.Fprintf(&msg, "template %q not found in namespace %q", e.Name, e.Namespace)
 	} else {
-		msg.WriteString(fmt.Sprintf("template %q not found", e.Name))
+		fmt.Fprintf(&msg, "template %q not found", e.Name)
 	}
 
 	if e.DidYouMean != "" {
-		msg.WriteString(fmt.Sprintf("; did you mean %q?", e.DidYouMean))
+		fmt.Fprintf(&msg, "; did you mean %q?", e.DidYouMean)
 	}
 
 	if len(e.Available) > 0 && len(e.Available) <= 10 {
@@ -35,9 +35,9 @@ func (e *TemplateNotFoundError) Error() string {
 		for i, n := range e.Available {
 			names[i] = string(n)
 		}
-		msg.WriteString(fmt.Sprintf("; available: [%s]", strings.Join(names, ", ")))
+		fmt.Fprintf(&msg, "; available: [%s]", strings.Join(names, ", "))
 	} else if len(e.Available) > 10 {
-		msg.WriteString(fmt.Sprintf("; %d templates available", len(e.Available)))
+		fmt.Fprintf(&msg, "; %d templates available", len(e.Available))
 	}
 
 	return msg.String()
@@ -110,19 +110,19 @@ func (e *RenderError) Error() string {
 	msg.WriteString("render error")
 
 	if e.Template != "" {
-		msg.WriteString(fmt.Sprintf(" in template %q", e.Template))
+		fmt.Fprintf(&msg, " in template %q", e.Template)
 	}
 
 	if e.Element != "" {
-		msg.WriteString(fmt.Sprintf(" at <%s>", e.Element))
+		fmt.Fprintf(&msg, " at <%s>", e.Element)
 	}
 
 	if e.Attribute != "" {
-		msg.WriteString(fmt.Sprintf(" [%s]", e.Attribute))
+		fmt.Fprintf(&msg, " [%s]", e.Attribute)
 	}
 
 	if e.Cause != nil {
-		msg.WriteString(fmt.Sprintf(": %v", e.Cause))
+		fmt.Fprintf(&msg, ": %v", e.Cause)
 	}
 
 	return msg.String()

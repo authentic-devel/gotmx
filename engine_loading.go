@@ -23,7 +23,7 @@ func (e *Engine) LoadFile(path string) error {
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	reader := bufio.NewReader(file)
 	normalizedPath := filepath.ToSlash(path)

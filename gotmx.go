@@ -66,12 +66,6 @@ type GoTemplateRegistry interface {
 	RegisterFunc(name string, fun interface{})
 }
 
-// clearTemplates removes all templates from the Engine's registry.
-func (e *Engine) clearTemplates() {
-	e.logger.Debug("Clearing all templates")
-	e.registry.ClearTemplates()
-}
-
 // NewRenderContext creates a new RenderContext that wraps this Engine's capabilities.
 // This context is created once per render call and passed through the entire rendering tree,
 // avoiding per-node allocations while decoupling renderables from the Engine type.

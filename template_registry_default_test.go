@@ -37,7 +37,7 @@ func TestGetTemplateWithOrWithoutNamespace(t *testing.T) {
 	if template == nil {
 		t.Error("Expected template to not be nil")
 	}
-	template, err = registry.GetTemplate("dummy#my-template")
+	_, err = registry.GetTemplate("dummy#my-template")
 	if err != nil {
 		t.Error("Expected template to exist, got error:", err)
 	}

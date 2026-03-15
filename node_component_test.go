@@ -815,13 +815,12 @@ func TestThatGWithWorksWithGOuterRepeat(t *testing.T) {
 func parseRenderAndCompareTemplate(e *Engine, template string, templateRef TemplateRef,
 	data any, expected string, t *testing.T) {
 
-	var tr *TemplateRegistryDefault
 	var tl *templateLoaderString
 	if e == nil {
-		e, tr, tl = initTestEngine()
+		e, _, tl = initTestEngine()
 	} else {
 		// In our tests we always use the default loader and registry
-		tr = e.registry.(*TemplateRegistryDefault)
+		tr := e.registry.(*TemplateRegistryDefault)
 		tl = tr.lazyTemplateLoader.(*templateLoaderString)
 	}
 
@@ -835,13 +834,12 @@ func parseRenderAndCompareTemplate(e *Engine, template string, templateRef Templ
 func parseRenderAndCompareTemplateUnescaped(e *Engine, template string, templateRef TemplateRef,
 	data any, expected string, t *testing.T) {
 
-	var tr *TemplateRegistryDefault
 	var tl *templateLoaderString
 	if e == nil {
-		e, tr, tl = initTestEngine()
+		e, _, tl = initTestEngine()
 	} else {
 		// In our tests we always use the default loader and registry
-		tr = e.registry.(*TemplateRegistryDefault)
+		tr := e.registry.(*TemplateRegistryDefault)
 		tl = tr.lazyTemplateLoader.(*templateLoaderString)
 	}
 	if err := tl.LoadFromString(template, "dummy"); err != nil {
@@ -1118,7 +1116,7 @@ func TestMaxNestingDepthErrorMessage(t *testing.T) {
 // TestDefaultMaxNestingDepth tests that the default max nesting depth is applied.
 func TestDefaultMaxNestingDepth(t *testing.T) {
 	g, _ := New()
-	defer g.Close()
+	defer func() { _ = g.Close() }()
 
 	if g.maxNestingDepth != DefaultMaxNestingDepth {
 		t.Errorf("Expected default max nesting depth to be %d, got %d", DefaultMaxNestingDepth, g.maxNestingDepth)
@@ -1193,7 +1191,7 @@ func TestContextCancellationStopsTemplateUse(t *testing.T) {
 // TestEscapedFieldInRenderContext tests that ctx.Escaped is properly set.
 func TestEscapedFieldInRenderContext(t *testing.T) {
 	g, _ := New()
-	defer g.Close()
+	defer func() { _ = g.Close() }()
 
 	ctx := g.NewRenderContext(context.Background())
 	// Default should be false (the zero value)

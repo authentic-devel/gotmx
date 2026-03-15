@@ -1,0 +1,10 @@
+linters:
+  # Start from the default set, explicitly listed so a golangci-lint
+  # upgrade never silently changes which linters are active.
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused

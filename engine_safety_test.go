@@ -17,7 +17,7 @@ func TestMaxNestingDepthExceeded(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	// Template A uses Template B, Template B uses Template A → circular
 	err = engine.LoadHTML(`
@@ -44,7 +44,7 @@ func TestMaxNestingDepthSelfReference(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	// Template that references itself
 	err = engine.LoadHTML(`<div data-g-define="self-ref"><div data-g-use="self-ref"></div></div>`)
@@ -68,7 +68,7 @@ func TestDeepNestingWithinLimit(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	// 3-level nesting chain, well within limit of 10
 	err = engine.LoadHTML(`
@@ -98,7 +98,7 @@ func TestConcurrentRender(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<span data-g-define="concurrent" data-g-inner-text="[[ .Name ]]">placeholder</span>`)
 	if err != nil {
@@ -138,7 +138,7 @@ func TestConcurrentRenderWithSlots(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`
 		<div data-g-define="slotted">
@@ -183,7 +183,7 @@ func TestRenderNonExistentTemplate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	_, err = engine.RenderString(context.Background(), "does-not-exist", nil)
 	if err == nil {
@@ -201,7 +201,7 @@ func TestRenderWithNilData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="nil-data">Static content</div>`)
 	if err != nil {
@@ -222,7 +222,7 @@ func TestWithLayoutNonExistentLayout(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<p data-g-define="page">Content</p>`)
 	if err != nil {
@@ -255,7 +255,7 @@ func TestEmptyTemplate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="empty"></div>`)
 	if err != nil {
@@ -301,7 +301,7 @@ func TestCustomResolver(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test" data-g-inner-text="[[ .Anything ]]">placeholder</div>`)
 	if err != nil {
@@ -346,7 +346,7 @@ func TestCustomLogger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	// Trigger a template-not-found error to generate a log message
 	_, _ = engine.RenderString(context.Background(), "nonexistent", nil)
@@ -365,7 +365,7 @@ func TestConditionNegationTrue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test"><span data-g-if="[[ .Show ]]">visible</span><span data-g-if="[[ .Hide ]]">hidden</span></div>`)
 	if err != nil {
@@ -396,7 +396,7 @@ func TestContextCancellationInChildren(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	// Template with many sibling children
 	err = engine.LoadHTML(`

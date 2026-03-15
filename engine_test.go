@@ -12,7 +12,7 @@ func TestNewEngineWithDefaults(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	if engine == nil {
 		t.Fatal("New() returned nil engine")
@@ -27,7 +27,7 @@ func TestEngineLoadHTML(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test-template">Hello, World!</div>`)
 	if err != nil {
@@ -50,7 +50,7 @@ func TestEngineRenderWithData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="greeting"><span data-g-inner-text="[[ .Name ]]">placeholder</span></div>`)
 	if err != nil {
@@ -74,7 +74,7 @@ func TestEngineRenderEscapesHTML(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test"><span data-g-inner-text="[[ .Text ]]">placeholder</span></div>`)
 	if err != nil {
@@ -98,7 +98,7 @@ func TestEngineRenderInnerTextAlwaysEscapes(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test"><span data-g-inner-text="[[ .Text ]]">placeholder</span></div>`)
 	if err != nil {
@@ -123,7 +123,7 @@ func TestEngineRenderInnerHtmlDoesNotEscape(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test"><span data-g-inner-html="[[ .Html ]]">placeholder</span></div>`)
 	if err != nil {
@@ -147,7 +147,7 @@ func TestEngineRenderToWriter(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<p data-g-define="hello">Hello</p>`)
 	if err != nil {
@@ -171,7 +171,7 @@ func TestEngineHasTemplate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="exists">Content</div>`)
 	if err != nil {
@@ -192,7 +192,7 @@ func TestEngineComponent(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="component">Component</div>`)
 	if err != nil {
@@ -214,7 +214,7 @@ func TestEngineWithSlots(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`
 		<div data-g-define="layout">
@@ -249,7 +249,7 @@ func TestEngineSingleSlot(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`
 		<div data-g-define="card">
@@ -279,7 +279,7 @@ func TestEngineWithLogger(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	if engine.config.logger != logger {
 		t.Error("Logger was not set correctly")
@@ -303,7 +303,7 @@ func TestEngineWithDevMode(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine2.Close()
+	defer func() { _ = engine2.Close() }()
 
 	if engine2.config.devMode {
 		t.Error("DevMode should be disabled")
@@ -316,7 +316,7 @@ func TestEngineWithDevDebounce(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	if engine.config.devDebounce != d {
 		t.Errorf("Expected devDebounce=%v, got %v", d, engine.config.devDebounce)
@@ -332,7 +332,7 @@ func TestEngineWithReloadCallback(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	if engine.config.reloadCallback == nil {
 		t.Error("Expected reloadCallback to be set")
@@ -350,7 +350,7 @@ func TestEngineRegisterFunc(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	// Register a custom function
 	engine.RegisterFunc("uppercase", func(s string) string {
@@ -391,7 +391,7 @@ func TestEngineUnescapedAffectsTextNodes(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	// Template with raw text nodes containing special characters.
 	// The HTML parser will unescape &amp; etc during parsing, so we use model paths
@@ -427,7 +427,7 @@ func TestEngineUnescapedAffectsOuterText(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test"><span data-g-outer-text="[[ .Text ]]">placeholder</span></div>`)
 	if err != nil {
@@ -460,7 +460,7 @@ func TestEngineContextCancellationDuringRender(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<ul data-g-define="list"><li data-g-outer-repeat="[[ .Items ]]" data-g-inner-text="[[ . ]]">item</li></ul>`)
 	if err != nil {
@@ -491,7 +491,7 @@ func TestEngineAttributeValuesAlwaysEscaped(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test" data-g-att-title="[[ .Title ]]">content</div>`)
 	if err != nil {
@@ -519,7 +519,7 @@ func TestEngineWithLayout(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`
 		<div data-g-define="layout">
@@ -553,7 +553,7 @@ func TestEngineWithLayoutNamedSlot(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`
 		<div data-g-define="layout">
@@ -589,7 +589,7 @@ func TestEngineWithLayoutPassesData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`
 		<div data-g-define="layout">
@@ -624,7 +624,7 @@ func TestBooleanAttributeRenderedWithoutValue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<button data-g-define="btn" data-g-attif-disabled="[[ .Disabled ]]">Click</button>`)
 	if err != nil {
@@ -652,7 +652,7 @@ func TestBooleanAttributeNotRenderedWhenFalse(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<button data-g-define="btn" data-g-attif-disabled="[[ .Disabled ]]">Click</button>`)
 	if err != nil {
@@ -677,7 +677,7 @@ func TestNonBooleanAttributeStillHasValue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<div data-g-define="test" data-g-att-data-custom="myvalue">content</div>`)
 	if err != nil {
@@ -699,7 +699,7 @@ func TestMultipleBooleanAttributes(t *testing.T) {
 	if err != nil {
 		t.Fatalf("New() returned error: %v", err)
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	err = engine.LoadHTML(`<input data-g-define="inp" type="checkbox" data-g-attif-checked="[[ .Checked ]]" data-g-attif-required="[[ .Required ]]" data-g-attif-disabled="[[ .Disabled ]]" />`)
 	if err != nil {

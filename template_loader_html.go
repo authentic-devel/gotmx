@@ -7,7 +7,6 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 // templateLoaderHTML is an implementation of the LazyTemplateLoader interface.
@@ -84,14 +83,6 @@ func (tl *templateLoaderHTML) loadFromFile(filePath string) error {
 	reader := bufio.NewReader(file)
 	normalizedPath := filepath.ToSlash(filePath)
 	return loadTemplateFromReader(tl.templateRegistry, reader, normalizedPath)
-}
-
-// loadFromString parses the given html string and extracts all Gotmx HTML templates from it.
-
-func (tl *templateLoaderHTML) loadFromString(templateString string, sourceFile string) error {
-	reader := strings.NewReader(templateString)
-	bufReader := bufio.NewReader(reader)
-	return loadTemplateFromReader(tl.templateRegistry, bufReader, sourceFile)
 }
 
 func (tl *templateLoaderHTML) loadFromFsPath(path string) error {

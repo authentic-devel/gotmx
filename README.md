@@ -429,3 +429,7 @@ Always validate and sanitize user input in your Go code before passing it to tem
 ## License
 
 MIT License - see LICENSE file for details.
+
+## AI Disclaimer
+
+This project was written manually by me, but AI was used to help with improvements and documentation.  

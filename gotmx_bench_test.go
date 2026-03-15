@@ -56,7 +56,7 @@ func BenchmarkRenderSimple(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "simple", data)
+		_ = e.Render(ctx, io.Discard, "simple", data)
 	}
 }
 
@@ -67,7 +67,7 @@ func BenchmarkRenderString(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.RenderString(ctx, "simple", data)
+		_, _ = e.RenderString(ctx, "simple", data)
 	}
 }
 
@@ -78,7 +78,7 @@ func BenchmarkRenderWithAttributes(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "attrs", data)
+		_ = e.Render(ctx, io.Discard, "attrs", data)
 	}
 }
 
@@ -93,7 +93,7 @@ func BenchmarkRenderWithRepeat(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "repeat", data)
+		_ = e.Render(ctx, io.Discard, "repeat", data)
 	}
 }
 
@@ -103,7 +103,7 @@ func BenchmarkRenderWithSlots(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "with-slots", nil,
+		_ = e.Render(ctx, io.Discard, "with-slots", nil,
 			Slot("header", "Custom Header"))
 	}
 }
@@ -115,7 +115,7 @@ func BenchmarkRenderComposed(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "composed", data)
+		_ = e.Render(ctx, io.Discard, "composed", data)
 	}
 }
 
@@ -126,7 +126,7 @@ func BenchmarkRenderConditional(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "conditional", data)
+		_ = e.Render(ctx, io.Discard, "conditional", data)
 	}
 }
 
@@ -141,7 +141,7 @@ func BenchmarkRenderWithRepeat1000(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "repeat", data)
+		_ = e.Render(ctx, io.Discard, "repeat", data)
 	}
 }
 
@@ -170,7 +170,7 @@ func BenchmarkRenderDeepNesting(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		e.Render(ctx, io.Discard, "level1", data)
+		_ = e.Render(ctx, io.Discard, "level1", data)
 	}
 }
 
@@ -182,7 +182,7 @@ func BenchmarkRenderStringPooling(b *testing.B) {
 	b.ResetTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			e.RenderString(ctx, "simple", data)
+			_, _ = e.RenderString(ctx, "simple", data)
 		}
 	})
 }
@@ -196,7 +196,7 @@ func BenchmarkIterateSlice(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		iterateValue(ctx, items, func(item any) error {
+		_ = iterateValue(ctx, items, func(item any) error {
 			return nil
 		})
 	}
@@ -211,7 +211,7 @@ func BenchmarkIterateStringSlice(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		iterateValue(ctx, items, func(item any) error {
+		_ = iterateValue(ctx, items, func(item any) error {
 			return nil
 		})
 	}
@@ -223,7 +223,7 @@ func BenchmarkIterateMap(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		iterateValue(ctx, m, func(item any) error {
+		_ = iterateValue(ctx, m, func(item any) error {
 			return nil
 		})
 	}
